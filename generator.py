@@ -1,4 +1,7 @@
 """
+original authored at github.com/python-acoustics
+GPL v3
+
 Generator
 =========
 
