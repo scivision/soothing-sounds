@@ -51,7 +51,7 @@ try:
 except ImportError:                                    # Use monkey-patching np.fft perhaps instead?
     from numpy.fft import rfft, irfft
 
-from .signal import normalise
+from signal_acoustics import normalise
 
 
 def noise(N, color='white'):
