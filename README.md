@@ -9,7 +9,7 @@ why didn't I merely have people install that package first? Because it requires 
 Usage examples:
 
 ```python main.py <color> ```
-where <color> is one of
+where ```<color>``` is one of
 
 white  pink blue violet brown
 
