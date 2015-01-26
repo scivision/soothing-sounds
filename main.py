@@ -7,6 +7,7 @@ from __future__ import division
 import numpy as np
 import pygame
 from generator import white
+from time import sleep
 fs = 44100 #[Hz] sample rate of sound card playback
 
 def main(ntype):
@@ -21,7 +22,7 @@ def main(ntype):
     print(samps.max())
     print(samps.size)
     print(sound.get_volume())
-    print(sound.get_length()) #seconds
+    sleep(sound.get_length()) #seconds
 
 if __name__ == '__main__':
     main('white')
