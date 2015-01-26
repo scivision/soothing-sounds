@@ -103,7 +103,7 @@ def pink(N):
     S = np.sqrt(np.arange(len(X))+1.) # +1 to avoid divide by zero
     y = (irfft(X/S)).real[0:N]
     return normalise(y)
-
+#    return y #extremely tiny value 1e-9
 
 def blue(N):
     """

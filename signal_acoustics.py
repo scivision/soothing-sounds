@@ -2,6 +2,7 @@
 forked from github.com/python-acoustics
 GPLv3
 """
+import numpy as np
 
 def ms(x):
     """Mean value of signal `x` squared.
