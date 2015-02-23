@@ -2,6 +2,7 @@
 simples web-based control
 from http://www.themagpi.com/issue/issue-9/article/the-python-pit-drive-your-raspberry-pi-with-a-mobile-phone/
 do not use this in a production system!
+prereq: pip install web.py
 """
 import web
 from web import form
