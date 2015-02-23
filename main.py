@@ -24,7 +24,7 @@ def main(ntype,nhours):
     ntype = ntype.lower()
     tic = time()
     samps = (noise(nsec*fs, color=ntype) * 32768/8).astype(np.int16) #TODO arbitary scaling to 16-bit, noise() outputs float64
-    print('it took {:0.0f}'.format(time()-tic) + ' seconds to compute {:0.0f}'.format(nsec) + ' sec. of white noise.')
+    print('it took {:0.1f}'.format(time()-tic) + ' seconds to compute {:0.0f}'.format(nsec) + ' sec. of white noise.')
 
     pygame.mixer.pre_init(fs, size=-16, channels=1)
     pygame.mixer.init()
