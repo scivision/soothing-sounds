@@ -24,7 +24,7 @@ def main(ntype,nhours):
     ntype = ntype.lower()
     tic = time()
     samps = (noise(nsec*fs, color=ntype) * 32768/8).astype(np.int16) #TODO arbitary scaling to 16-bit, noise() outputs float64
-    print('it took {:0.1f}'.format(time()-tic) + ' seconds to compute {:0.0f}'.format(nsec) + ' sec. of white noise.')
+    print('it took {:0.1f}'.format(time()-tic) + ' seconds to compute {:0.0f}'.format(nsec) + ' sec. of ' + ntype + ' noise.')
 
     pygame.mixer.pre_init(fs, size=-16, channels=1)
     pygame.mixer.init()
@@ -38,15 +38,15 @@ def main(ntype,nhours):
     print('max sample value {:0.0f}'.format(samps.max()))
     print('pygame volume level: ' + str(sound.get_volume()))
     print('sound playing for {:0.0f}'.format(sleepsec) + ' seconds')
-    
- 
+
+
     sleep(sleepsec) #seconds
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
     p = ArgumentParser(description="noise generation program for Raspberry Pi or any Python-capable computer")
     p.add_argument('nmode',help='what type of white noise [white, pink, brown...]',type=str,nargs='?',default='pink')
-    p.add_argument('hours',help='how many hours do you want sound generated for [default=8 hours]',type=float,nargs='?',default=8)	
+    p.add_argument('hours',help='how many hours do you want sound generated for [default=8 hours]',type=float,nargs='?',default=8)
     a = p.parse_args()
 
     main(a.nmode, a.hours)
