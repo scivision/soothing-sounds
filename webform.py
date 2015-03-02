@@ -1,4 +1,6 @@
+#!/usr/bin/env python2
 """
+at this time, web.py requires Python 2.7
 simples web-based control
 from http://www.themagpi.com/issue/issue-9/article/the-python-pit-drive-your-raspberry-pi-with-a-mobile-phone/
 do not use this in a production system!
