@@ -28,6 +28,12 @@ cd /tmp
 git clone http://bitbucket.org/pygame/pygame
 cd /tmp/pygame
 python setup.py build
-sudo python setup.py install
+python setup.py install
 ```
-Note, for the last command, if you're using anaconda or a virtualenv, you will have to manually type the full path to python.
+Note, there is a bug noted on some Linux installs of anaconda where the solution is to rename the symbolic links
+https://groups.google.com/a/continuum.io/forum/#!topic/anaconda/-DLG2ZdTkw0
+e.g. if you can't import pygame due to an error like
+
+ImportError: /home/username/anaconda3/bin/../lib/libm.so.6: version `GLIBC_2.15' not found (required by /usr/lib/x86_64-linux-gnu/libpulse.so.0)
+
+so in my ~/anaconda3/lib I renamed libm.so and libm.so.6 to libm.so.bak and libm.so.6.bak and then pygame worked.
