@@ -45,8 +45,8 @@ def main(ntype,nhours):
 if __name__ == '__main__':
     from argparse import ArgumentParser
     p = ArgumentParser(description="noise generation program for Raspberry Pi or any Python-capable computer")
-    p.add_argument('-m','--nmode',help='what type of white noise [white, pink, brown...]',type=str,default='white')
-    p.add_argument('-n','--hours',help='how many hours do you want sound generated for [default=8 hours]',type=float,default=8)	
+    p.add_argument('nmode',help='what type of white noise [white, pink, brown...]',type=str,nargs='?',default='pink')
+    p.add_argument('hours',help='how many hours do you want sound generated for [default=8 hours]',type=float,nargs='?',default=8)	
     a = p.parse_args()
 
     main(a.nmode, a.hours)
