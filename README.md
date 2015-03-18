@@ -13,6 +13,11 @@ where ```<color>``` is one of
 
 white  pink blue violet brown
 
+Audio library install:
+----------------------
+Pick one of the following:
+
+## Pygame
 if you don't have pygame installed already, try
 ```
 sudo apt-get install python-pygame
@@ -40,3 +45,14 @@ e.g. if you can't import pygame due to an error like
 ImportError: /home/username/anaconda3/bin/../lib/libm.so.6: version `GLIBC_2.15' not found (required by /usr/lib/x86_64-linux-gnu/libpulse.so.0)
 
 so in my ~/anaconda3/lib I renamed libm.so and libm.so.6 to libm.so.bak and libm.so.6.bak and then pygame worked.
+
+## PyAudio:
+```
+sudo apt-get install portaudio19-dev libjack-dev libjack0
+pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
+```
+which on my Ubuntu system removed the packages libasound2-plugins:i386 libjack-jackd2-0 libjack-jackd2-0:i386
+ (for reference in case someday you want them back)
+
+
+
