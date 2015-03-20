@@ -8,7 +8,7 @@ generates soothing sounds, e.g. for sleep enhancement
 SUGGESTED USE:
 write file to SD card, use it in speaker/phone capable of playing FLAC
 Example (assuming fs=16000):
-python2 soothing.py pink 8 -o test.raw   # 931MB file, 8 hours of pink noise
+python soothing.py pink 8 -o test.raw   # 931MB file, 8 hours of pink noise
 ffmpeg -f s16le -ar 16000 -ac 1 -i test.raw test.flac #760.4MB file  (or just .wav, gives same size file as .raw)
 
 
