@@ -40,14 +40,11 @@ For related functions, check :mod:`scipy.signal`.
 
 
 """
-
 import numpy as np
-#import random
-#import itertools
-#import scipy.signal.sawtooth
 
 try:
     from pyfftw.interfaces.numpy_fft import rfft, irfft       # Performs much better than numpy's fftpack
+    print('using fftw')
 except ImportError:                                    # Use monkey-patching np.fft perhaps instead?
     from numpy.fft import rfft, irfft
 
@@ -97,7 +94,7 @@ def pink(N):
     # Another way would be using the FFT
     x = white(N)
     X = rfft(x) / N
-    S = np.sqrt(np.arange(len(X))+1.) # +1 to avoid divide by zero
+    S = np.sqrt(np.arange(X.size)+1.) # +1 to avoid divide by zero
     y = (irfft(X/S)).real[0:N]
     return normalise(y)
 #    return y #extremely tiny value 1e-9
@@ -114,7 +111,7 @@ def blue(N):
     """
     x = white(N)
     X = rfft(x) / N
-    S = np.sqrt(np.arange(len(X)))# Filter
+    S = np.sqrt(np.arange(X.size))# Filter
     y = (irfft(X*S)).real[0:N]
     return normalise(y)
 
@@ -131,7 +128,7 @@ def brown(N):
     """
     x = white(N)
     X = rfft(x) / N
-    S = (np.arange(len(X))+1)# Filter
+    S = (np.arange(X.size)+1)# Filter
     y = (irfft(X/S)).real[0:N]
     return normalise(y)
 
@@ -148,7 +145,7 @@ def violet(N):
     """
     x = white(N)
     X = rfft(x) / N
-    S = (np.arange(len(X)))# Filter
+    S = (np.arange(X.size))# Filter
     y = (irfft(X*S)).real[0:N]
     return normalise(y)
 
@@ -160,60 +157,6 @@ noise_generators = {
     'brown'  : brown,
     'violet' : violet,
     }
-
-
-def noise_frequency_dependent(N, frequencies, gains):
-    """Frequency-dependent noise signal.
-
-    :param N: Amount of samples.
-    :param frequencies: Normalized frequencies.
-    :param gains: Gains.
-    :param gains: Gain for given frequency.
-    :type gains: List of tuples or 2xN array. The first item in the
-
-
-
-#def sawtooth(f, fs, width=1):
-    #"""
-    #Sawtooth. Return f sawteeth per second.
-
-
-    #"""
-    #t = np.arange()
-
-#def white_generator(N=44100):
-    #"""
-    #White noise generator. Repeat every ``N`` samples.
-    #"""
-    #return itertools.cycle(white(N))
-
-#def pink_generator(N=44100):
-    #"""
-    #Pink noise generator. Repeat every ``N`` samples.
-    #"""
-    #return itertools.cycle(white(N))
-
-#def brown_generator(N=44100):
-    #"""
-    #Brown noise generator. Repeat every ``N`` samples.
-    #"""
-    #return itertools.cycle(brown(N))
-
-#def generate(iterable):
-    #"""
-    #Return indefinetely long generator of iterable.
-
-    #.. note:: :func:`itertools.cycle`
-    #"""
-    #return itertools.cycle(iterable)
-
-
-#def sawtooth_generator(f, fs=44100):
-    #"""
-    #Sawtooth generator. Repeat....
-    #"""
-    #raise NotImplementedError
-
 
 def heaviside(N):
     """Heaviside.

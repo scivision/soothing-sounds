@@ -38,31 +38,30 @@ from time import sleep, time
 soundmod = 'pygame'#'pyglet'#'pyaudio' #'pygame' #'scikits.audiolab'
 wavapi = 'raw' #'skaudio' #'scipy'
 
-fs = 16000 #[Hz] sample rate of sound card playback
 nsec = 60 #unique sound length -- 600 sec was too much for 512MB Rpi in certain noise modes that do advanced computations
 nbitfile = 16
 nbitfloat = 32 #from generator.py
 
-def computenoise(ntype):
+def computenoise(ntype, fs):
     nsamp = fs*nsec
-    ramused = nsamp*nbitfloat//8 #bytes, assuming np.float64, does NOT account for copies!
+    ramused = nsamp*nbitfloat//8 #bytes, assuming np.float32, does NOT account for copies!
     if ramused>128e6:
-        print('*** using more than 128MB of RAM for samples, this can be too much for Raspberry Pi')
+        print('*** using more than {:d} MB of RAM for samples, this can be too much for Raspberry Pi.'.format(ramused//1e6))
 
     rawused = ramused//(nbitfloat//nbitfile)
     if rawused>1e9:
-        print('** caution, your raw output is {:0.1f}'.format(rawused/1e9) + ' GB of data.')
+        print('** caution, your raw output is {:.1f} GB of data.'.format(rawused/1e9))
 
-    print('sound samples used at least {:0d}'.format(ramused) + ' bytes of RAM to create')
+    print('sound samples used at least {:.0f} MB of RAM to create.'.format(ramused//1e6))
     ntype = ntype.lower()
     tic = time()
     samps = (noise(nsamp, color=ntype) * 32768/8).astype(np.int16) #TODO arbitary scaling to 16-bit, noise() outputs float64
-    print('it took {:0.1f}'.format(time()-tic) + ' seconds to compute {:0.0f}'.format(nsec) +
-          ' sec. of ' + ntype + ' noise.')
-    print('max sample value {:0.0f}'.format(samps.max()))
+    print('it took {:.2f} seconds to compute {:.0f} sec. of {:s} noise.'.format(
+           time()-tic, nsec,ntype))
+    print('max sample value {:.0f}'.format(samps.max()))
     return samps
 
-def liveplay(samps,nhours):
+def liveplay(samps,nhours,fs ):
     smod = importlib.import_module(soundmod)
 
     if soundmod == 'pyaudio':
@@ -78,7 +77,7 @@ def liveplay(samps,nhours):
         sound.play(loops=nloop)
         sleepsec = sound.get_length()*nloop
         print('pygame volume level: ' + str(sound.get_volume()))
-        print('sound playing for {:0.2f}'.format(sleepsec/3600) + ' hours')
+        print('sound playing for {:.2f} hours.'.format(sleepsec/3600))
         sleep(sleepsec) #seconds
     elif soundmod=='scikits.audiolab':
         smod.play(samps)
@@ -95,7 +94,7 @@ def liveplay(samps,nhours):
         print('unknown sound module' + str(soundmod))
         sys.exit(1)
 
-def savenoise(samps,nhours,ofn):
+def savenoise(samps,nhours,ofn,fs):
     if ofn is not None:
         if wavapi == 'raw':
             try: #delete because we're going to append
@@ -121,11 +120,22 @@ if __name__ == '__main__':
     p = ArgumentParser(description="noise generation program for Raspberry Pi or any Python-capable computer")
     p.add_argument('nmode',help='what type of white noise [white, pink, brown...]',type=str,nargs='?',default='pink')
     p.add_argument('hours',help='how many hours do you want sound generated for [default=8 hours]',type=float,nargs='?',default=8)
+    p.add_argument('--fs',help='sampling freq e.g. 16000 or 44100',type=int,default=16000)
     p.add_argument('-o','--ofn',help='output .wav filename',type=str,default=None)
-    a = p.parse_args()
+    p.add_argument('--selftest',help='debug only',action='store_true')
+    p = p.parse_args()
 
-    samps = computenoise(a.nmode)
-    if a.ofn is None:
-        liveplay(samps, a.hours)
+    if p.selftest:
+        samps = computenoise('pink', 16000)
+        assert samps.itemsize == 2
+        assert samps.shape == (960000,)
     else:
-        savenoise(samps,a.hours,a.ofn)
+
+        samps = computenoise(p.nmode, p.fs)
+        if p.ofn is None:
+            try:
+                liveplay(samps, p.hours, p.fs)
+            except Exception as e:
+                print('*** couldnt play live sound. Consider just saving to disk and using an SD card. ' + str(e))
+        else:
+            savenoise(samps, p.hours, p.ofn, p.fs)

@@ -13,8 +13,23 @@ where ```<color>``` is one of
 
 white  pink blue violet brown
 
-Audio library install:
+Prereqs:
+--------
+```
+pip install -r requirements.txt
+```
+
+optional high performance Python FFTW install:
+----------------------------------------------
+```
+sudo apt-get install libfftw3-dev
+pip install -r optional-requirements.txt
+```
+
+optional Audio library install:
 ----------------------
+If you want live playback instead of saving to disk,
+
 Pick one of the following:
 
 ## Pygame
