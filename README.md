@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/scienceopen/soothing-sounds.svg)](https://travis-ci.org/scienceopen/soothing-sounds)
 # soothing-sounds
 An acoustically pleasing Python code, targeted initially for Raspberry Pi, but should run almost anywhere
 
