@@ -11,6 +11,7 @@ before_install:
 
 install:
  - conda install --yes python=$TRAVIS_PYTHON_VERSION --file requirements.txt
-
+ 
 script:  
  - python soothing.py --selftest
+
