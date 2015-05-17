@@ -122,20 +122,13 @@ if __name__ == '__main__':
     p.add_argument('hours',help='how many hours do you want sound generated for [default=8 hours]',type=float,nargs='?',default=8)
     p.add_argument('--fs',help='sampling freq e.g. 16000 or 44100',type=int,default=16000)
     p.add_argument('-o','--ofn',help='output .wav filename',type=str,default=None)
-    p.add_argument('--selftest',help='debug only',action='store_true')
     p = p.parse_args()
 
-    if p.selftest:
-        samps = computenoise('pink', 16000)
-        assert samps.itemsize == 2
-        assert samps.shape == (960000,)
+    samps = computenoise(p.nmode, p.fs)
+    if p.ofn is None:
+        try:
+            liveplay(samps, p.hours, p.fs)
+        except Exception as e:
+            print('*** couldnt play live sound. Consider just saving to disk and using an SD card. ' + str(e))
     else:
-
-        samps = computenoise(p.nmode, p.fs)
-        if p.ofn is None:
-            try:
-                liveplay(samps, p.hours, p.fs)
-            except Exception as e:
-                print('*** couldnt play live sound. Consider just saving to disk and using an SD card. ' + str(e))
-        else:
-            savenoise(samps, p.hours, p.ofn, p.fs)
+        savenoise(samps, p.hours, p.ofn, p.fs)
