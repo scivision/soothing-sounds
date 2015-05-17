@@ -1,4 +1,7 @@
+[![Code Climate](https://codeclimate.com/github/scienceopen/soothing-sounds/badges/gpa.svg)](https://codeclimate.com/github/scienceopen/soothing-sounds)
 [![Build Status](https://travis-ci.org/scienceopen/soothing-sounds.svg)](https://travis-ci.org/scienceopen/soothing-sounds)
+[![Coverage Status](https://coveralls.io/repos/scienceopen/soothing-sounds/badge.svg)](https://coveralls.io/r/scienceopen/soothing-sounds)
+
 # soothing-sounds
 An acoustically pleasing Python code, targeted initially for Raspberry Pi, but should run almost anywhere
 
