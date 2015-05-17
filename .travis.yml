@@ -8,8 +8,7 @@ before_install:
   - if [[ $(python --version 2>&1) == "Python 3."* ]]; then
      pyv=3;
     fi
-  - 
-url=http://repo.continuum.io/miniconda/Miniconda"$pyv"-latest-Linux-x86_64.sh
+  - url=http://repo.continuum.io/miniconda/Miniconda"$pyv"-latest-Linux-x86_64.sh
   - wget $url -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH=$HOME/miniconda/bin:$PATH
