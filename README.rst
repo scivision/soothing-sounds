@@ -17,17 +17,19 @@ soothing-sounds
 An acoustically pleasing Python code, targeted initially for Raspberry Pi, but should run almost anywhere
 
 Note: the core noise generation code is almost entirely from 
-` Python Acoustics <https://github.com/python-acoustics/python-acoustics>`_ 
+`Python Acoustics <https://github.com/python-acoustics/python-acoustics>`_ 
 why didn't I merely have people install that package first? Because it requires Numpy >=1.8 and several other new versions including SciPy, and Raspberry Pi currently comes with Numpy 1.6.2 and it takes a long time to install Numpy, SciPy, etc. via pip on Raspberry Pi due to slow CPU.
 
 
 Usage examples:
 ===============
+::
 
-```python main.py <color> ```
-where ```<color>``` is one of
+ python main.py <color>
+ 
+where <color> is one of
 
-white  pink blue violet brown
+ white  pink blue violet brown
 
 Prereqs:
 ========
@@ -93,4 +95,4 @@ PyAudio:
  pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
 
 which on my Ubuntu system removed the packages libasound2-plugins:i386 libjack-jackd2-0 libjack-jackd2-0:i386
- (for reference in case someday you want them back)
+(for reference in case someday you want them back)
