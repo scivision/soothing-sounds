@@ -31,16 +31,18 @@ white  pink blue violet brown
 
 Prereqs:
 ========
-```
-pip install -r requirements.txt
-```
+::
+
+ pip install -r requirements.txt
+
 
 optional high performance Python FFTW install:
 ==============================================
-```
-sudo apt-get install libfftw3-dev
-pip install -r optional-requirements.txt
-```
+::
+
+ sudo apt-get install libfftw3-dev
+ pip install -r optional-requirements.txt
+
 
 optional Audio library install:
 ----------------------
@@ -50,26 +52,30 @@ Pick one of the following:
 
 Pygame
 ------
-if you don't have pygame installed already, try
-```
-sudo apt-get install python-pygame
-```
-or
-```
-sudo apt-get install mercurial libflac-dev libmad0-dev libmikmod2-dev libogg-dev libportmidi-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libvorbis-dev libwebp-dev libwebpdemux1 sharutils 
+if you don't have pygame installed already, try::
 
-pip install hg+http://bitbucket.org/pygame/pygame
-```
-or more manually
-```
-sudo apt-get install mercurial libflac-dev libmad0-dev libmikmod2-dev libogg-dev libportmidi-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libvorbis-dev libwebp-dev libwebpdemux1 sharutils 
+ sudo apt-get install python-pygame
 
-cd /tmp
-git clone http://bitbucket.org/pygame/pygame
-cd /tmp/pygame
-python setup.py build
-python setup.py install
-```
+or::
+
+ sudo apt-get install mercurial libflac-dev libmad0-dev libmikmod2-dev libogg-dev libportmidi-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libvorbis-dev libwebp-dev libwebpdemux1 sharutils 
+
+ pip install hg+http://bitbucket.org/pygame/pygame
+
+or more manually::
+
+ sudo apt-get install mercurial libflac-dev libmad0-dev libmikmod2-dev libogg-dev libportmidi-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libvorbis-dev libwebp-dev libwebpdemux1 sharutils 
+
+ cd /tmp
+ 
+ git clone http://bitbucket.org/pygame/pygame
+ 
+ cd /tmp/pygame
+ 
+ python setup.py build
+ 
+ python setup.py install
+
 Note, there is a bug noted on some Linux installs of anaconda where the solution is to rename the symbolic links
 https://groups.google.com/a/continuum.io/forum/#!topic/anaconda/-DLG2ZdTkw0
 e.g. if you can't import pygame due to an error like
@@ -80,9 +86,11 @@ so in my ~/anaconda3/lib I renamed libm.so and libm.so.6 to libm.so.bak and libm
 
 PyAudio:
 --------
-```
-sudo apt-get install portaudio19-dev libjack-dev libjack0
-pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
-```
+::
+ 
+ sudo apt-get install portaudio19-dev libjack-dev libjack0
+ 
+ pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
+
 which on my Ubuntu system removed the packages libasound2-plugins:i386 libjack-jackd2-0 libjack-jackd2-0:i386
  (for reference in case someday you want them back)
