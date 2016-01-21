@@ -1,16 +1,28 @@
-[![Code Climate](https://codeclimate.com/github/scienceopen/soothing-sounds/badges/gpa.svg)](https://codeclimate.com/github/scienceopen/soothing-sounds)
-[![Build Status](https://travis-ci.org/scienceopen/soothing-sounds.svg)](https://travis-ci.org/scienceopen/soothing-sounds)
-[![Coverage Status](https://coveralls.io/repos/scienceopen/soothing-sounds/badge.svg)](https://coveralls.io/r/scienceopen/soothing-sounds)
+.. image:: https://codeclimate.com/github/scienceopen/soothing-sounds/badges/gpa.svg
+ :target: https://codeclimate.com/github/scienceopen/soothing-sounds
+ :alt: Code Climate
 
-# soothing-sounds
+.. image:: https://travis-ci.org/scienceopen/soothing-sounds.svg
+ :target: https://travis-ci.org/scienceopen/soothing-sounds
+ :alt: Travis CI
+ 
+.. image:: https://coveralls.io/repos/scienceopen/soothing-sounds/badge.svg
+ :target: https://coveralls.io/r/scienceopen/soothing-sounds
+ :alt: Coveralls.io
+
+=================
+soothing-sounds
+=================
+
 An acoustically pleasing Python code, targeted initially for Raspberry Pi, but should run almost anywhere
 
 Note: the core noise generation code is almost entirely from 
-https://github.com/python-acoustics/python-acoustics
+` Python Acoustics <https://github.com/python-acoustics/python-acoustics>`_ 
 why didn't I merely have people install that package first? Because it requires Numpy >=1.8 and several other new versions including SciPy, and Raspberry Pi currently comes with Numpy 1.6.2 and it takes a long time to install Numpy, SciPy, etc. via pip on Raspberry Pi due to slow CPU.
 
 
 Usage examples:
+===============
 
 ```python main.py <color> ```
 where ```<color>``` is one of
@@ -18,13 +30,13 @@ where ```<color>``` is one of
 white  pink blue violet brown
 
 Prereqs:
---------
+========
 ```
 pip install -r requirements.txt
 ```
 
 optional high performance Python FFTW install:
-----------------------------------------------
+==============================================
 ```
 sudo apt-get install libfftw3-dev
 pip install -r optional-requirements.txt
@@ -36,7 +48,8 @@ If you want live playback instead of saving to disk,
 
 Pick one of the following:
 
-## Pygame
+Pygame
+------
 if you don't have pygame installed already, try
 ```
 sudo apt-get install python-pygame
@@ -65,13 +78,11 @@ ImportError: /home/username/anaconda3/bin/../lib/libm.so.6: version `GLIBC_2.15'
 
 so in my ~/anaconda3/lib I renamed libm.so and libm.so.6 to libm.so.bak and libm.so.6.bak and then pygame worked.
 
-## PyAudio:
+PyAudio:
+--------
 ```
 sudo apt-get install portaudio19-dev libjack-dev libjack0
 pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
 ```
 which on my Ubuntu system removed the packages libasound2-plugins:i386 libjack-jackd2-0 libjack-jackd2-0:i386
  (for reference in case someday you want them back)
-
-
-
