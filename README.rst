@@ -2,8 +2,8 @@
  :target: https://codeclimate.com/github/scienceopen/soothing-sounds
  :alt: Code Climate
 
-.. image:: https://travis-ci.org/scienceopen/soothing-sounds.svg
- :target: https://travis-ci.org/scienceopen/soothing-sounds
+.. image:: https://travis-ci.org/scivision/soothing-sounds.svg
+ :target: https://travis-ci.org/scivision/soothing-sounds
  :alt: Travis CI
  
 .. image:: https://coveralls.io/repos/scienceopen/soothing-sounds/badge.svg
@@ -14,82 +14,91 @@
 soothing-sounds
 =================
 
-An acoustically pleasing Python code, targeted initially for Raspberry Pi, but should run almost anywhere
+An acoustically pleasing Python code, targeted initially for Raspberry Pi, but should run almost anywhere.  Typically uses Pygame or PyAudio to generate sounds.
 
-Note: the core noise generation code is almost entirely from 
-`Python Acoustics <https://github.com/python-acoustics/python-acoustics>`_ 
+.. contents::
 
 
 Usage examples:
 ===============
 ::
 
- python main.py <color>
+    python soothing.py <color>
  
 where <color> is one of
 
- white  pink blue violet brown
+    white pink blue violet brown
 
 Prereqs:
 ========
 ::
 
- pip install -r requirements.txt
+    pip install -r requirements.txt
 
 
 optional high performance Python FFTW install:
-==============================================
+----------------------------------------------
 ::
 
  sudo apt-get install libfftw3-dev
  pip install -r optional-requirements.txt
 
 
-optional Audio library install:
-----------------------
-If you want live playback instead of saving to disk,
+For live playback of Python audio (optional)
+============================================
 
-Pick one of the following:
+pick one of the following:
 
-Pygame
-------
-if you don't have pygame installed already, try::
+Pygame installation or compile Pygame
+-------------------------------------
+Pick one of the following methods to install pygame
 
- sudo apt-get install python-pygame
+::
 
-or::
+    sudo apt-get install python-pygame
 
- sudo apt-get install mercurial libflac-dev libmad0-dev libmikmod2-dev libogg-dev libportmidi-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libvorbis-dev libwebp-dev libwebpdemux1 sharutils libswscale-dev libavformat-dev
+compile Pygame via pip
+~~~~~~~~~~~~~~~~~~~~~~
+::
 
- pip install hg+http://bitbucket.org/pygame/pygame
+    sudo apt-get install mercurial libflac-dev libmad0-dev libmikmod2-dev libogg-dev libportmidi-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libvorbis-dev libwebp-dev libwebpdemux1 sharutils libswscale-dev libavformat-dev
 
-or more manually::
+    pip install hg+http://bitbucket.org/pygame/pygame
 
- cd /tmp
+manually compile and install Pygame
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+    cd /tmp
  
- hg clone http://bitbucket.org/pygame/pygame
+    hg clone http://bitbucket.org/pygame/pygame
  
- cd /tmp/pygame
+    cd /tmp/pygame
  
- python setup.py build
+    python setup.py build
  
- python setup.py install
+    python setup.py install
 
-Note, there is a bug noted on some Linux installs of anaconda where the solution is to rename the symbolic links
-https://groups.google.com/a/continuum.io/forum/#!topic/anaconda/-DLG2ZdTkw0
-e.g. if you can't import pygame due to an error like
-
-ImportError: /home/username/anaconda3/bin/../lib/libm.so.6: version `GLIBC_2.15' not found (required by /usr/lib/x86_64-linux-gnu/libpulse.so.0)
-
-so in my ~/anaconda3/lib I renamed libm.so and libm.so.6 to libm.so.bak and libm.so.6.bak and then pygame worked.
 
 PyAudio:
 --------
 ::
  
- sudo apt-get install portaudio19-dev libjack-dev libjack0
- 
- pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
+    pip install pyaudio
 
-which on my Ubuntu system removed the packages libasound2-plugins:i386 libjack-jackd2-0 libjack-jackd2-0:i386
-(for reference in case someday you want them back)
+Linux PyAudio prereq
+~~~~~~~~~~~~~~~~~~~~
+::
+ 
+    sudo apt-get install portaudio19-dev libjack-dev libjack0
+
+Mac PyAudio prereq
+~~~~~~~~~~~~~~~~~~~
+::
+
+    brew install portaudio
+
+
+Reference
+=========
+the core noise generation code is almost entirely from `Python Acoustics <https://github.com/python-acoustics/python-acoustics>`_ 
