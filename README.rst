@@ -5,7 +5,7 @@
 .. image:: https://travis-ci.org/scivision/soothing-sounds.svg
  :target: https://travis-ci.org/scivision/soothing-sounds
  :alt: Travis CI
- 
+
 .. image:: https://coveralls.io/repos/scienceopen/soothing-sounds/badge.svg
  :target: https://coveralls.io/r/scienceopen/soothing-sounds
  :alt: Coveralls.io
@@ -18,22 +18,22 @@ An acoustically pleasing Python code, targeted initially for Raspberry Pi, but s
 
 .. contents::
 
+Install
+=======
+::
+
+    python setup.py develop
+
 
 Usage examples:
 ===============
 ::
 
     python soothing.py <color>
- 
+
 where <color> is one of
 
     white pink blue violet brown
-
-Prereqs:
-========
-::
-
-    pip install -r requirements.txt
 
 
 optional high performance Python FFTW install:
@@ -41,7 +41,6 @@ optional high performance Python FFTW install:
 ::
 
  sudo apt-get install libfftw3-dev
- pip install -r optional-requirements.txt
 
 
 For live playback of Python audio (optional)
@@ -70,26 +69,26 @@ manually compile and install Pygame
 ::
 
     cd /tmp
- 
+
     hg clone http://bitbucket.org/pygame/pygame
- 
+
     cd /tmp/pygame
- 
+
     python setup.py build
- 
+
     python setup.py install
 
 
 PyAudio:
 --------
 ::
- 
+
     pip install pyaudio
 
 Linux PyAudio prereq
 ~~~~~~~~~~~~~~~~~~~~
 ::
- 
+
     sudo apt-get install portaudio19-dev libjack-dev libjack0
 
 Mac PyAudio prereq
@@ -101,4 +100,4 @@ Mac PyAudio prereq
 
 Reference
 =========
-the core noise generation code is almost entirely from `Python Acoustics <https://github.com/python-acoustics/python-acoustics>`_ 
+the core noise generation code is almost entirely from `Python Acoustics <https://github.com/python-acoustics/python-acoustics>`_

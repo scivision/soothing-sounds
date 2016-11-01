@@ -1,35 +1,48 @@
+language: generic
+
+notifications:
+  email: false
+
 git:
-  depth: 1
-language: python
-python:
-  - "3.4"
-  - "2.7"
-before_install:
-  - if [[ $(python --version 2>&1) == "Python 3."* ]]; then
-     pyv=3;
-    fi
-  - url=http://repo.continuum.io/miniconda/Miniconda"$pyv"-latest-Linux-x86_64.sh
-  - wget $url -O miniconda.sh
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH=$HOME/miniconda/bin:$PATH
-  - conda update --yes conda
-  - python --version #just checking
+  depth: 3
+
+matrix:
+  include:
+    - os: osx
+      env: pyv=2.7
+
+    - os: linux
+      env: pyv=2.7
+
+    - os: osx
+      env: pyv=3.5
+
+    - os: linux
+      env: pyv=3.5
+
+addons:
+    apt:
+      packages:
+        - gfortran
 
 install:
- - if [[ -z $pyv ]]; then
-   pip -q install coveralls;
-  fi
- - conda install --yes --file requirements.txt
+    - if [[ $TRAVIS_OS_NAME == osx ]]; then
+        wget http://repo.continuum.io/miniconda/Miniconda-latest-MacOSX-x86_64.sh -O miniconda.sh;
+      else
+        wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+      fi
 
-script:
-  - if [[ -z $pyv ]]; then
-        echo "running coverage";
-        coverage run test.py;
-    else
-        python test.py;
-    fi
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH=$HOME/miniconda/bin:$PATH
+    - hash -r
 
-after_success:
-  - if [[ -z $pyv ]]; then
-     coveralls;
-    fi
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    - conda create -n test python=$pyv
+    - source activate test
+    - pip -q install coveralls
+    - python setup.py develop
+
+script: coverage run tests/test.py -v
+
+after_success: coveralls

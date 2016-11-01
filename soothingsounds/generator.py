@@ -44,11 +44,11 @@ import numpy as np
 
 try:
     from pyfftw.interfaces.numpy_fft import rfft, irfft       # Performs much better than numpy's fftpack
-    print('using fftw')
+    print('using high-performance FFTW')
 except ImportError:                                    # Use monkey-patching np.fft perhaps instead?
     from numpy.fft import rfft, irfft
 
-from signal_acoustics import normalise
+from .signal_acoustics import normalise
 
 
 def noise(N, color='white'):
