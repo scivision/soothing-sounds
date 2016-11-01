@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """
 Michael Hirsch
-GPL v3
 based on python-acoustics noise generator code
 generates soothing sounds, e.g. for sleep enhancement
 
@@ -27,13 +26,14 @@ write several hours of random noise without consuming all your RAM.
 
 """
 from __future__ import division
-import sys
+from pathlib import Path
 import importlib
 import numpy as np
-import os
 #
 from generator import noise
+from plots import plotspectrogram
 from time import sleep, time
+from matplotlib.pyplot import show
 
 soundmod = 'pygame'#'pyglet'#'pyaudio' #'pygame' #'scikits.audiolab'
 wavapi = 'raw' #'skaudio' #'scipy'
@@ -91,18 +91,19 @@ def liveplay(samps,nhours,fs ):
 #        src.play()
 
     else:
-        print('unknown sound module' + str(soundmod))
-        sys.exit(1)
+        raise ImportError('unknown sound module' + str(soundmod))
 
 def savenoise(samps,nhours,ofn,fs):
     if ofn is not None:
+        ofn = Path(ofn).expanduser()
+
         if wavapi == 'raw':
             try: #delete because we're going to append
-                os.remove(ofn)
+                ofn.unlink()
             except OSError:
                 pass
 
-            with open(ofn,'a+b') as f:
+            with ofn.open('a+b') as f:
                 for i in range(int(nhours*3600/nsec)):
                     f.write(samps)
         elif wavapi == 'scipy':
@@ -129,6 +130,9 @@ if __name__ == '__main__':
         try:
             liveplay(samps, p.hours, p.fs)
         except Exception as e:
-            print('*** couldnt play live sound. Consider just saving to disk and using an SD card. ' + str(e))
+            raise RuntimeError('could not play live sound. Consider just saving to disk and using an SD card. {}'.format(e))
     else:
         savenoise(samps, p.hours, p.ofn, p.fs)
+        plotspectrogram(samps,p.fs,p.nmode)
+
+        show()
