@@ -1,9 +1,3 @@
-try:
-    from pathlib import Path
-    Path().expanduser()
-except (ImportError,AttributeError):
-    from pathlib2 import Path
-#
 from pathlib import Path
 import numpy as np
 from time import sleep
