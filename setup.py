@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 from setuptools import setup
-try:
-    import conda.cli
-    conda.cli.main('install','--file','requirements.txt')
-except Exception as e:
-    print(e)
+
+req = ['numpy','scipy','pyfftw']
 
 setup(name='soothingsounds',
-      packages=['soothingsounds']
+      packages=['soothingsounds'],
+      author='Michael Hirsch, Ph.D',
+      url = 'https://github.com/scivision/soothing-sounds',
+      install_requires=req,
 	  )

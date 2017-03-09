@@ -1,5 +1,7 @@
 language: generic
 
+dist: trusty
+
 notifications:
   email: false
 
@@ -8,22 +10,17 @@ git:
 
 matrix:
   include:
-    - os: osx
-      env: pyv=2.7
+#    - os: osx
+#      env: pyv=3.5
 
     - os: linux
-      env: pyv=2.7
-
-    - os: osx
-      env: pyv=3.5
-
-    - os: linux
-      env: pyv=3.5
+      env: pyv=3.6
 
 addons:
     apt:
       packages:
         - gfortran
+        - gcc
 
 install:
     - if [[ $TRAVIS_OS_NAME == osx ]]; then
@@ -41,6 +38,7 @@ install:
     - conda create -n test python=$pyv
     - source activate test
     - pip -q install coveralls
+    - conda install numpy scipy
     - python setup.py develop
 
 script: coverage run tests/test.py -v
