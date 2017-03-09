@@ -21,6 +21,7 @@ addons:
       packages:
         - gfortran
         - gcc
+        - libfftw3-dev
 
 install:
     - if [[ $TRAVIS_OS_NAME == osx ]]; then
