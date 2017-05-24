@@ -1,13 +1,9 @@
-.. image:: https://codeclimate.com/github/scienceopen/soothing-sounds/badges/gpa.svg
- :target: https://codeclimate.com/github/scienceopen/soothing-sounds
- :alt: Code Climate
-
 .. image:: https://travis-ci.org/scivision/soothing-sounds.svg
  :target: https://travis-ci.org/scivision/soothing-sounds
  :alt: Travis CI
 
-.. image:: https://coveralls.io/repos/scienceopen/soothing-sounds/badge.svg
- :target: https://coveralls.io/r/scienceopen/soothing-sounds
+.. image:: https://coveralls.io/repos/scivision/soothing-sounds/badge.svg
+ :target: https://coveralls.io/r/scivision/soothing-sounds
  :alt: Coveralls.io
 
 =================
@@ -52,9 +48,17 @@ Pygame installation or compile Pygame
 -------------------------------------
 Pick one of the following methods to install pygame
 
+pip
+~~~
+simplest way::
+
+    pip install pygame
+
+Linux distro
+~~~~~~~~~~~~
 ::
 
-    sudo apt-get install python-pygame
+    sudo apt install python-pygame
 
 compile Pygame via pip
 ~~~~~~~~~~~~~~~~~~~~~~
