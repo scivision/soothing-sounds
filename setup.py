@@ -1,19 +1,16 @@
 #!/usr/bin/env python
-req = ['nose','numpy','scipy']
+install_requires = ['numpy','scipy']
+tests_require = ['nose','coveralls']
 
-import pip
-try:
-    import conda.cli
-    conda.cli.main('install',*req)
-except ImportError:    
-    pip.main(['install'] + req)
-# %%
-from setuptools import setup
+
+from setuptools import setup,find_packages
 
 setup(name='soothingsounds',
-      packages=['soothingsounds'],
+      packages=find_packages(),
       author='Michael Hirsch, Ph.D',
       url = 'https://github.com/scivision/soothing-sounds',
-      install_requires=req,
-      extras_require={'pyfftw':['pyfftw']},
+      install_requires=install_requires,
+      extras_require={'pyfftw':['pyfftw'],'tests':tests_require},
+      tests_require=tests_require,
+      python_requires='>=2.7',
 	  )
