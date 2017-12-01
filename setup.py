@@ -12,5 +12,5 @@ setup(name='soothingsounds',
       install_requires=install_requires,
       extras_require={'pyfftw':['pyfftw'],'tests':tests_require},
       tests_require=tests_require,
-      python_requires='>=2.7',
+      python_requires='>=3.5',
 	  )
