@@ -83,10 +83,10 @@ def savenoise(samps: np.ndarray, nhours: int, ofn: Path, fs: int, nsec: int, wav
             for i in range(int(nhours*3600/nsec)):
                 f.write(samps)
 
-    elif wavapi == 'scipy':
+    elif wavapi == 'scipy':  # pragma: no cover
         from scipy.io import wavfile
         wavfile.write(ofn, fs, samps)
-    elif wavapi == 'skaudio':
+    elif wavapi == 'skaudio':  # pragma: no cover
         from scikits.audiolab import Format, Sndfile
         fmt = Format('flac')
         f = Sndfile(ofn, 'w', fmt, 1, 16000)  # scikit-audio does not have context manager
