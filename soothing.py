@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Michael Hirsch
+Michael Hirsch, Ph.D.
 based on python-acoustics noise generator code
 generates soothing sounds, e.g. for sleep enhancement
 
@@ -11,7 +11,7 @@ python soothing.py pink 8 -o test.raw   # 931MB file, 8 hours of pink noise
 ffmpeg -f s16le -ar 16000 -ac 1 -i test.raw test.flac #760.4MB file  (or just .wav, gives same size file as .raw)
 
 
---nsec:  600 sec was too much for 512MB Rpi 1 in certain noise modes that do advanced computations
+-nsec:  600 sec was too much for 512MB Rpi 1 in certain noise modes that do advanced computations
 
 future: add GPIO input for Raspberry Pi, Beaglebone, Edison, etc.
 

@@ -13,22 +13,21 @@ def computenoise(ntype: str, fs: int, nsec: int, nbitfloat: int, nbitfile: int) 
     nsamp = int(fs*nsec)
     ramused = nsamp*nbitfloat//8  # bytes, assuming np.float32, does NOT account for copies!
     if ramused > 128e6:
-        logging.warning('using more than {:d} MB of RAM for samples, this can be too much for Raspi.'.format(ramused//1e6))
+        logging.warning(f'using more than {ramused//1e6:d} MB of RAM for samples, this can be too much for Raspi.')
 
     rawused = ramused // (nbitfloat // nbitfile)
     if rawused > 1e9:
-        logging.warning('your raw output is {:.1f} GB of data.'.format(rawused/1e9))
+        logging.warning(f'your raw output is {rawused/1e9:.1f} GB of data.')
 
-    print('sound samples used at least {:.0f} MB of RAM to create.'.format(ramused//1e6))
+    print(f'sound samples used at least {ramused//1e6:.0f} MB of RAM to create.')
 
     ntype = ntype.lower()
     tic = time()
     # TODO arbitary scaling to 16-bit, noise() outputs float64
     samps = (noise(nsamp, color=ntype) * 32768 / 8).astype(np.int16)
 
-    print('it took {:.2f} seconds to compute {:.0f} sec. of {:s} noise.'.format(
-        time()-tic, nsec, ntype))
-    print('max sample value {:.0f}'.format(samps.max()))
+    print(f'it took {time()-tic:.2f} seconds to compute {nsec:.0f} sec. of {ntype:s} noise.')
+    print(f'max sample value {samps.max():.0f}')
 
     return samps
 
@@ -65,30 +64,33 @@ def liveplay(samps: np.ndarray, nhours: int, fs: int, nsec: int, soundmod: str='
 #        src.play()
 
     else:
-        raise ImportError('unknown sound module {}'.format(soundmod))
+        raise ImportError(f'unknown sound module {soundmod}')
 
 
 def savenoise(samps: np.ndarray, nhours: int, ofn: Path, fs: int, nsec: int, wavapi: str):
-    if ofn is not None:
-        ofn = Path(ofn).expanduser()
+    if not ofn:
+        return
 
-        f: Any
+    ofn = Path(ofn).expanduser()
 
-        if wavapi == 'raw':
-            try:  # delete because we're going to append
-                ofn.unlink()
-            except OSError:
-                pass
+    f: Any
 
-            with ofn.open('a+b') as f:
-                for i in range(int(nhours*3600/nsec)):
-                    f.write(samps)
-        elif wavapi == 'scipy':
-            from scipy.io import wavfile
-            wavfile.write(ofn, fs, samps)
-        elif wavapi == 'skaudio':
-            from scikits.audiolab import Format, Sndfile
-            fmt = Format('flac')
-            f = Sndfile(ofn, 'w', fmt, 1, 16000)  # scikit-audio does not have context manager
-            f.write_frames(samps)
-            f.close()
+    if wavapi == 'raw':
+        if ofn.is_file():  # delete because we're going to append
+            ofn.unlink()
+
+        with ofn.open('a+b') as f:
+            for i in range(int(nhours*3600/nsec)):
+                f.write(samps)
+
+    elif wavapi == 'scipy':
+        from scipy.io import wavfile
+        wavfile.write(ofn, fs, samps)
+    elif wavapi == 'skaudio':
+        from scikits.audiolab import Format, Sndfile
+        fmt = Format('flac')
+        f = Sndfile(ofn, 'w', fmt, 1, 16000)  # scikit-audio does not have context manager
+        f.write_frames(samps)
+        f.close()
+    else:
+        raise ValueError(f'I do not understand write method {wavapi}')
