@@ -37,12 +37,12 @@ def liveplay(samps: np.ndarray, nhours: int, fs: int, nsec: int, soundmod: str='
 
     if soundmod == 'sounddevice':
         smod.play(samps, fs)  # releases GIL
-    elif soundmod == 'pyaudio':
+    elif soundmod == 'pyaudio':  # pragma: no cover
         p = smod.PyAudio()
         stream = p.open(rate=fs, format=smod.paInt16, channels=1, output=True)
         for i in range(int(nhours*3600/nsec)):
             stream.write(samps.tostring())
-    elif soundmod == 'pygame':
+    elif soundmod == 'pygame':  # pragma: no cover
         smod.mixer.pre_init(fs, size=-16, channels=1)
         smod.mixer.init()
         sound = smod.sndarray.make_sound(samps)
@@ -52,10 +52,10 @@ def liveplay(samps: np.ndarray, nhours: int, fs: int, nsec: int, soundmod: str='
         print('pygame volume level: ' + str(sound.get_volume()))
         print('sound playing for {:.2f} hours.'.format(sleepsec/3600))
         sleep(sleepsec)  # seconds
-    elif soundmod == 'scikit.audiolab':
+    elif soundmod == 'scikit.audiolab':  # pragma: no cover
         smod.play(samps)
-    elif soundmod == 'pyglet':
-        print('pyglet not yet implemented')
+    elif soundmod == 'pyglet':  # pragma: no cover
+        raise NotImplementedError('pyglet not yet implemented')
 #        """
 #        http://www.pyglet.org/doc-current/api/pyglet/media/pyglet.media.AudioFormat.html#pyglet.media.AudioFormat
 #        """
