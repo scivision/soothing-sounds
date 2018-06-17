@@ -37,8 +37,6 @@ Waveforms
 *********
 
 For related functions, check :mod:`scipy.signal`.
-
-
 """
 import numpy as np
 
@@ -64,7 +62,8 @@ def noise(N, color='white'):
         print('** unknown color ' + str(color) + ', falling back to pink noise.')
         return noise_generators['pink'](N)
 
-def white(N):
+
+def white(N: int):
     """
     White noise.
 
@@ -76,7 +75,8 @@ def white(N):
     """
     return np.random.randn(N).astype(np.float32)
 
-def pink(N):
+
+def pink(N: int):
     """
     Pink noise.
 
@@ -87,19 +87,20 @@ def pink(N):
 
     """
     # This method uses the filter with the following coefficients.
-    #b = np.array([0.049922035, -0.095993537, 0.050612699, -0.004408786])
-    #a = np.array([1, -2.494956002, 2.017265875, -0.522189400])
-    #return lfilter(B, A, np.random.randn(N))
+    # b = np.array([0.049922035, -0.095993537, 0.050612699, -0.004408786])
+    # a = np.array([1, -2.494956002, 2.017265875, -0.522189400])
+    # return lfilter(B, A, np.random.randn(N))
 
     # Another way would be using the FFT
     x = white(N)
     X = rfft(x) / N
-    S = np.sqrt(np.arange(X.size)+1.) # +1 to avoid divide by zero
+    S = np.sqrt(np.arange(X.size)+1.)  # +1 to avoid divide by zero
     y = (irfft(X/S)).real[0:N]
     return normalise(y)
 #    return y #extremely tiny value 1e-9
 
-def blue(N):
+
+def blue(N: int):
     """
     Blue noise.
 
@@ -111,12 +112,12 @@ def blue(N):
     """
     x = white(N)
     X = rfft(x) / N
-    S = np.sqrt(np.arange(X.size))# Filter
+    S = np.sqrt(np.arange(X.size))  # Filter
     y = (irfft(X*S)).real[0:N]
     return normalise(y)
 
 
-def brown(N):
+def brown(N: int):
     """
     Violet noise.
 
@@ -128,12 +129,12 @@ def brown(N):
     """
     x = white(N)
     X = rfft(x) / N
-    S = (np.arange(X.size)+1)# Filter
+    S = (np.arange(X.size)+1)  # Filter
     y = (irfft(X/S)).real[0:N]
     return normalise(y)
 
 
-def violet(N):
+def violet(N: int):
     """
     Violet noise. Power increases with 6 dB per octave.
 
@@ -145,23 +146,23 @@ def violet(N):
     """
     x = white(N)
     X = rfft(x) / N
-    S = (np.arange(X.size))# Filter
+    S = (np.arange(X.size))  # Filter
     y = (irfft(X*S)).real[0:N]
     return normalise(y)
 
 
 noise_generators = {
-    'white'  : white,
-    'pink'   : pink,
-    'blue'   : blue,
-    'brown'  : brown,
-    'violet' : violet,
-    }
+                  'white': white,
+                  'pink': pink,
+                  'blue': blue,
+                  'brown': brown,
+                  'violet': violet,
+                  }
 
-def heaviside(N):
+
+def heaviside(N: int):
     """Heaviside.
 
     Returns the value 0 for `x < 0`, 1 for `x > 0`, and 1/2 for `x = 0`.
     """
     return 0.5 * (np.sign(N) + 1)
-

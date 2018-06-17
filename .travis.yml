@@ -8,14 +8,20 @@ python:
 os:
   - linux
 
-notifications:
-  email: false
+group: travis_latest
 
 git:
   depth: 3
 
 install: pip install -e .[tests]
 
-script: coverage run tests/test.py -v
+script:
+  - pytest -sv
+  - flake8
+  - mypy . --ignore-missing-imports
 
-after_success: coveralls
+after_success:
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.6* ]]; then
+    coverage run tests/test_all.py;
+    coveralls;
+    fi

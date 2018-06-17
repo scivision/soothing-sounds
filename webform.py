@@ -21,6 +21,7 @@ my_form = form.Form(
  form.Button("btn", id="btnG", value="ON", html="Green", class_="btnGreen"),
 )
 
+
 # define what happens when the index page is called
 class index:
     # GET us used when the page is first requested
@@ -35,18 +36,19 @@ class index:
 
         # Determine which action user submitted
         if userData.btn == "OFF":
-            data = "0" #Rgb
+            data = "0"  # Rgb
         elif userData.btn == "ON":
-            data = "1" # rGb
+            data = "1"  # rGb
         else:
             print("I didn't understand your input")
 
         # write the file
         with open('/tmp/blah.txt', 'w') as f:
             f.write(data)
-       
+
         # reload the web form ready for the next user input
         raise web.seeother('/')
+
 
 if __name__ == '__main__':
     app.run()
