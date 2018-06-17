@@ -26,7 +26,8 @@ saving as RAW requires using an external program like FFMPEG or Goldwave to conv
 The huge advantage of RAW is that you can iteratively write several hours of random noise without consuming all your RAM.
 
 """
-import sooothingsounds as ss
+from time import sleep
+import soothingsounds as ss
 from soothingsounds.plots import plotspectrogram
 from matplotlib.pyplot import show
 
@@ -48,9 +49,10 @@ if __name__ == '__main__':
     p = P.parse_args()
 
     samps = ss.computenoise(p.nmode, p.fs, p.nsec, nbitfloat, nbitfile)
-    if p.ofn is None:
+    if not p.ofn:
         try:
             ss.liveplay(samps, p.hours, p.fs, p.nsec, soundmod)
+            sleep(p.nsec)  # for async playback, else sound doesn't play
         except Exception as e:
             raise RuntimeError('could not play live sound. Consider just saving to disk and using an SD card. {}'.format(e))
     else:
