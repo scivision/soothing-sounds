@@ -1,6 +1,9 @@
 [![image](https://travis-ci.org/scivision/soothing-sounds.svg)](https://travis-ci.org/scivision/soothing-sounds)
 [![image](https://coveralls.io/repos/scivision/soothing-sounds/badge.svg)](https://coveralls.io/r/scivision/soothing-sounds)
 [![Build status](https://ci.appveyor.com/api/projects/status/bg0wym66ousyk657?svg=true)](https://ci.appveyor.com/project/scivision/soothing-sounds)
+[![pypi versions](https://img.shields.io/pypi/pyversions/soothingsounds.svg)](https://pypi.python.org/pypi/soothingsounds)
+[![pypi format](https://img.shields.io/pypi/format/soothingsounds.svg)](https://pypi.python.org/pypi/soothingsounds)
+[![PyPi Download stats](http://pepy.tech/badge/soothingsounds)](http://pepy.tech/project/soothingsounds)
 
 # Soothing Sounds Generator
 
