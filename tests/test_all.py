@@ -3,6 +3,7 @@ import pytest
 import soothingsounds as ss
 import tempfile
 import os
+from pathlib import Path
 
 nsec = 1
 nbitfile = 16
@@ -14,7 +15,7 @@ APPVEYOR = 'APPVEYOR' in os.environ and os.environ['APPVEYOR']
 
 
 @pytest.fixture
-def test_noise():
+def noise():
 
     for noise in Noises:
         samps = ss.computenoise(noise, 16000, nsec, nbitfloat, nbitfile)
@@ -25,11 +26,14 @@ def test_noise():
 
 
 @pytest.mark.xfail(APPVEYOR, reason="AppVeyor strict permissions even in same directory")
-def test_write():
+def test_write(noise):
     # specifying same directory is for CI, which may not give permission to write in temp dir.
     with tempfile.NamedTemporaryFile(suffix='.raw') as f:
-        ss.savenoise(test_noise(), nhours=0.01, ofn=f.name, fs=44100, nsec=nsec, wavapi='raw')
+        ofn = Path(f.name)
+        ss.savenoise(noise, nhours=0.01, ofn=ofn, fs=44100, nsec=nsec, wavapi='raw')
+
+        assert ofn.is_file()
 
 
 if __name__ == '__main__':
-    pytest.main()
+    pytest.main([__file__])

@@ -17,8 +17,8 @@ app = web.application(urls, globals())
 
 # Define the buttons that should be shown on the form
 my_form = form.Form(
- form.Button("btn", id="btnR", value="OFF", html="Red", class_="btnRed"),
- form.Button("btn", id="btnG", value="ON", html="Green", class_="btnGreen"),
+    form.Button("btn", id="btnR", value="OFF", html="Red", class_="btnRed"),
+    form.Button("btn", id="btnG", value="ON", html="Green", class_="btnGreen"),
 )
 
 

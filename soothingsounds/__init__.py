@@ -80,7 +80,7 @@ def savenoise(samps: np.ndarray, nhours: int, ofn: Path, fs: int, nsec: int, wav
             ofn.unlink()
 
         with ofn.open('a+b') as f:
-            for i in range(int(nhours*3600/nsec)):
+            for _ in range(int(nhours*3600/nsec)):
                 f.write(samps)
 
     elif wavapi == 'scipy':  # pragma: no cover

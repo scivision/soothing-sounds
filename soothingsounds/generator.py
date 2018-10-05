@@ -152,12 +152,12 @@ def violet(N: int):
 
 
 noise_generators = {
-                  'white': white,
-                  'pink': pink,
-                  'blue': blue,
-                  'brown': brown,
-                  'violet': violet,
-                  }
+    'white': white,
+    'pink': pink,
+    'blue': blue,
+    'brown': brown,
+    'violet': violet,
+}
 
 
 def heaviside(N: int):
