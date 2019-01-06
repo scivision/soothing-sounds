@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/48785075.svg)](https://zenodo.org/badge/latestdoi/48785075)
 [![image](https://travis-ci.org/scivision/soothing-sounds.svg)](https://travis-ci.org/scivision/soothing-sounds)
 [![image](https://coveralls.io/repos/scivision/soothing-sounds/badge.svg)](https://coveralls.io/r/scivision/soothing-sounds)
 [![Build status](https://ci.appveyor.com/api/projects/status/bg0wym66ousyk657?svg=true)](https://ci.appveyor.com/project/scivision/soothing-sounds)
