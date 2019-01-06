@@ -28,8 +28,12 @@ The huge advantage of RAW is that you can iteratively write several hours of ran
 """
 from time import sleep
 import soothingsounds as ss
-from soothingsounds.plots import plotspectrogram
-from matplotlib.pyplot import show
+from argparse import ArgumentParser
+try:
+    import soothingsounds.plots as plots
+    from matplotlib.pyplot import show
+except (ImportError, RuntimeError):
+    show = None
 
 soundmod = 'sounddevice'  # 'pygame'#'pyglet'#'pyaudio' #'pygame' #'scikits.audiolab'
 wavapi = 'raw'  # 'skaudio' #'scipy'
@@ -37,12 +41,13 @@ wavapi = 'raw'  # 'skaudio' #'scipy'
 nbitfile = 16
 nbitfloat = 32  # from generator.py
 
-if __name__ == '__main__':
-    from argparse import ArgumentParser
+
+def main():
     P = ArgumentParser(description="noise generation program for Raspberry Pi or any Python-capable computer")
     P.add_argument('nmode', help='what type of white noise [white, pink, brown...]', nargs='?', default='pink')
-    P.add_argument(
-        'hours', help='how many hours do you want sound generated for [default=8 hours]', type=float, nargs='?', default=8)
+    P.add_argument('hours',
+                   help='how many hours do you want sound generated for [default=8 hours]',
+                   type=float, nargs='?', default=8)
     P.add_argument('-fs', help='sampling freq e.g. 16000 or 44100', type=int, default=16000)
     P.add_argument('-o', '--ofn', help='output .wav filename')
     P.add_argument('-nsec', help='length of unique noise sequence [seconds]', type=float, default=60)
@@ -54,9 +59,17 @@ if __name__ == '__main__':
             ss.liveplay(samps, p.hours, p.fs, p.nsec, soundmod)
             sleep(p.nsec)  # for async playback, else sound doesn't play
         except Exception as e:
-            raise RuntimeError('could not play live sound. Consider just saving to disk and using an SD card. {}'.format(e))
+            raise RuntimeError(f'could not play live sound. Consider just saving to disk and using an SD card. {e}')
     else:
         ss.savenoise(samps, p.hours, p.ofn, p.fs, p.nsec, wavapi)
-        plotspectrogram(samps, p.fs, p.nmode)
+
+    if show is not None:
+        plots.time(samps, p.fs, p.nmode)
+        plots.plotpsd(samps, p.fs, p.nmode)
+        # plots.plotspectrogram(samps, p.fs, p.nmode)
 
         show()
+
+
+if __name__ == '__main__':
+    main()

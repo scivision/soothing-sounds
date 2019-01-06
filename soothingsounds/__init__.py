@@ -9,7 +9,9 @@ from typing import Any
 from .generator import noise
 
 
-def computenoise(ntype: str, fs: int, nsec: int, nbitfloat: int, nbitfile: int) -> np.ndarray:
+def computenoise(ntype: str, fs: int, nsec: int,
+                 nbitfloat: int, nbitfile: int,
+                 verbose: bool = False) -> np.ndarray:
     nsamp = int(fs*nsec)
     ramused = nsamp*nbitfloat//8  # bytes, assuming np.float32, does NOT account for copies!
     if ramused > 128e6:
@@ -26,13 +28,13 @@ def computenoise(ntype: str, fs: int, nsec: int, nbitfloat: int, nbitfile: int) 
     # TODO arbitary scaling to 16-bit, noise() outputs float64
     samps = (noise(nsamp, color=ntype) * 32768 / 8).astype(np.int16)
 
-    print(f'it took {time()-tic:.2f} seconds to compute {nsec:.0f} sec. of {ntype:s} noise.')
-    print(f'max sample value {samps.max():.0f}')
+    if verbose:
+        print(f'it took {time()-tic:.2f} seconds to compute {nsec:.0f} sec. of {ntype:s} noise.')
 
     return samps
 
 
-def liveplay(samps: np.ndarray, nhours: int, fs: int, nsec: int, soundmod: str='sounddevice'):
+def liveplay(samps: np.ndarray, nhours: int, fs: int, nsec: int, soundmod: str = 'sounddevice'):
     smod: Any = importlib.import_module(soundmod)
 
     if soundmod == 'sounddevice':
@@ -55,7 +57,7 @@ def liveplay(samps: np.ndarray, nhours: int, fs: int, nsec: int, soundmod: str='
     elif soundmod == 'scikit.audiolab':  # pragma: no cover
         smod.play(samps)
     elif soundmod == 'pyglet':  # pragma: no cover
-        raise NotImplementedError('pyglet not yet implemented')
+        raise NotImplementedError('pyglet not implemented')
 #        """
 #        http://www.pyglet.org/doc-current/api/pyglet/media/pyglet.media.AudioFormat.html#pyglet.media.AudioFormat
 #        """

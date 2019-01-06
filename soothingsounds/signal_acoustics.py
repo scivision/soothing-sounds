@@ -6,41 +6,40 @@ import numpy as np
 
 
 def ms(x: np.ndarray) -> np.ndarray:
-    """Mean value of signal `x` squared.
+    """Mean Square value of signal `x`.
 
-    :param x: Dynamic quantity.
-    :returns: Mean squared of `x`.
+    input
+    -----
 
+    * x: signal vector
+
+    output
+    ------
+
+    * Mean square of `x`.
     """
-    return (np.abs(x)**2.0).mean()
+
+    return (np.abs(x)**2).mean()
 
 
 def rms(x: np.ndarray) -> np.ndarray:
-    """Root mean squared of signal `x`.
+    """Root Mean Square value of signal `x`.
 
-    :param x: Dynamic quantity.
+    input
+    -----
 
-    .. math:: x_{rms} = lim_{T \\to \\infty} \\sqrt{\\frac{1}{T} \int_0^T |f(x)|^2 \\mathrm{d} t }
-
-    :seealso: :func:`ms`.
-
+    * x: signal vector
     """
+
     return np.sqrt(ms(x))
 
 
-def normalise(y: np.ndarray, x: np.ndarray=None) -> np.ndarray:
+def normalise(y: np.ndarray, x: np.ndarray = 1.) -> np.ndarray:
     """Normalise power in y to a (standard normal) white noise signal.
 
     Optionally normalise to power in signal `x`.
 
-    #The mean power of a Gaussian with :math:`\\mu=0` and :math:`\\sigma=1` is 1.
+    The mean power of a Gaussian with `mu=0` and `sigma=1` is 1.
     """
-    # return y * np.sqrt( (np.abs(x)**2.0).mean() / (np.abs(y)**2.0).mean() )
-    if x is not None:
-        x = ms(x)
-    else:
-        x = 1.0
-    return y * np.sqrt(x / ms(y))
-    # return y * np.sqrt( 1.0 / (np.abs(y)**2.0).mean() )
 
-    # Broken? Caused correlation in auralizations....weird!
+    return y * np.sqrt(ms(x) / ms(y))
