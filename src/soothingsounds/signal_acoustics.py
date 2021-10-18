@@ -2,6 +2,7 @@
 forked from github.com/python-acoustics
 GPLv3
 """
+from __future__ import annotations
 import numpy as np
 
 
@@ -19,7 +20,7 @@ def ms(x: np.ndarray) -> np.ndarray:
     * Mean square of `x`.
     """
 
-    return (np.abs(x)**2).mean()
+    return (abs(x) ** 2).mean()
 
 
 def rms(x: np.ndarray) -> np.ndarray:
@@ -34,7 +35,7 @@ def rms(x: np.ndarray) -> np.ndarray:
     return np.sqrt(ms(x))
 
 
-def normalise(y: np.ndarray, x: np.ndarray = 1.) -> np.ndarray:
+def normalise(y: np.ndarray, x: float | np.ndarray = 1.0) -> np.ndarray:
     """Normalise power in y to a (standard normal) white noise signal.
 
     Optionally normalise to power in signal `x`.
@@ -42,4 +43,4 @@ def normalise(y: np.ndarray, x: np.ndarray = 1.) -> np.ndarray:
     The mean power of a Gaussian with `mu=0` and `sigma=1` is 1.
     """
 
-    return y * np.sqrt(ms(x) / ms(y))
+    return y * np.sqrt(ms(np.atleast_1d(x)) / ms(y))

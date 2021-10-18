@@ -25,15 +25,19 @@ Violet | +9 dB | +6 dB
 import numpy as np
 
 try:
-    from pyfftw.interfaces.numpy_fft import rfft, irfft  # Performs much better than numpy's fftpack
-    print('using high-performance FFTW')
+    from pyfftw.interfaces.numpy_fft import (
+        rfft,
+        irfft,
+    )  # Performs much better than numpy's fftpack
+
+    print("using high-performance FFTW")
 except ImportError:
     from numpy.fft import rfft, irfft
 
 from .signal_acoustics import normalise
 
 
-def noise(N: int, color: str = 'white') -> np.ndarray:
+def noise(N: int, color: str = "white") -> np.ndarray:
     """Noise generator.
 
     * N: Amount of samples.
@@ -42,11 +46,11 @@ def noise(N: int, color: str = 'white') -> np.ndarray:
     https://github.com/python-acoustics
     """
     noise_generators = {
-        'white': white,
-        'pink': pink,
-        'blue': blue,
-        'brown': brown,
-        'violet': violet
+        "white": white,
+        "pink": pink,
+        "blue": blue,
+        "brown": brown,
+        "violet": violet,
     }
 
     return noise_generators[color](N)
@@ -88,8 +92,8 @@ def pink(N: int) -> np.ndarray:
     # Another way would be using the FFT
     x = white(N)
     X = rfft(x) / N
-    S = np.sqrt(np.arange(X.size)+1.)  # +1 to avoid divide by zero
-    y = irfft(X/S).real[:N]
+    S = np.sqrt(np.arange(X.size) + 1.0)  # +1 to avoid divide by zero
+    y = irfft(X / S).real[:N]
 
     return normalise(y)  # extremely tiny value 1e-9 without normalization
 
@@ -108,7 +112,7 @@ def blue(N: int) -> np.ndarray:
     x = white(N)
     X = rfft(x) / N
     S = np.sqrt(np.arange(X.size))  # Filter
-    y = irfft(X*S).real[:N]
+    y = irfft(X * S).real[:N]
 
     return normalise(y)
 
@@ -126,8 +130,8 @@ def brown(N: int) -> np.ndarray:
     """
     x = white(N)
     X = rfft(x) / N
-    S = np.arange(X.size)+1  # Filter
-    y = irfft(X/S).real[:N]
+    S = np.arange(X.size) + 1  # Filter
+    y = irfft(X / S).real[:N]
 
     return normalise(y)
 
@@ -146,6 +150,6 @@ def violet(N: int) -> np.ndarray:
     x = white(N)
     X = rfft(x) / N
     S = np.arange(X.size)  # Filter
-    y = irfft(X*S).real[0:N]
+    y = irfft(X * S).real[0:N]
 
     return normalise(y)
