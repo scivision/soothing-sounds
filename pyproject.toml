@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "soothingsounds"
-version = "1.0.2"
+dynamic = ["readme", "version"]
 description = "Generate a variety of white/brown/pink noises good for relaxation"
 requires-python = ">=3.10"
 dependencies = [
@@ -28,6 +28,10 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
 ]
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"], content-type = "text/markdown"}
+version = {attr = "soothingsounds.__version__"}
 
 [project.urls]
 Homepage = "https://github.com/scivision/soothing-sounds"

@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
-Michael Hirsch, Ph.D.
+Scivision
 based on python-acoustics noise generator code
 generates soothing sounds, e.g. for sleep enhancement
 
@@ -30,12 +30,6 @@ The huge advantage of RAW is that you can iteratively write several hours of ran
 from time import sleep
 import soothingsounds as ss
 from argparse import ArgumentParser
-
-try:
-    import soothingsounds.plots as plots
-    from matplotlib.pyplot import show
-except (ImportError, RuntimeError):
-    show = None
 
 soundmod = "sounddevice"  # 'pygame'#'pyglet'#'pyaudio' #'pygame' #'scikits.audiolab'
 wavapi = "raw"  # 'skaudio' #'scipy'
@@ -71,6 +65,11 @@ def main():
         type=float,
         default=60,
     )
+    P.add_argument(
+        "--plot",
+        help="plot the noise in time and frequency domain",
+        action="store_true",
+    )
     p = P.parse_args()
 
     samps = ss.computenoise(p.nmode, p.fs, p.nsec, nbitfloat, nbitfile)
@@ -80,8 +79,11 @@ def main():
     else:
         ss.savenoise(samps, p.hours, p.ofn, p.fs, p.nsec, wavapi)
 
-    if show is not None:
-        plots.time(samps, p.fs, p.nmode)
+    if p.plot:
+        import soothingsounds.plots as plots
+        from matplotlib.pyplot import show
+
+        plots.time(samps, p.fs)
         plots.plotpsd(samps, p.fs, p.nmode)
         # plots.plotspectrogram(samps, p.fs, p.nmode)
 

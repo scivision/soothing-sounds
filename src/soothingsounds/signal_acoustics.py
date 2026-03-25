@@ -3,11 +3,10 @@ forked from github.com/python-acoustics
 GPLv3
 """
 
-from __future__ import annotations
 import numpy as np
 
 
-def ms(x: np.ndarray) -> np.ndarray:
+def ms(x):
     """Mean Square value of signal `x`.
 
     input
@@ -24,7 +23,7 @@ def ms(x: np.ndarray) -> np.ndarray:
     return (abs(x) ** 2).mean()
 
 
-def rms(x: np.ndarray) -> np.ndarray:
+def rms(x):
     """Root Mean Square value of signal `x`.
 
     input
@@ -36,7 +35,7 @@ def rms(x: np.ndarray) -> np.ndarray:
     return np.sqrt(ms(x))
 
 
-def normalise(y: np.ndarray, x: float | np.ndarray = 1.0) -> np.ndarray:
+def normalise(y, x: float = 1.0):
     """Normalise power in y to a (standard normal) white noise signal.
 
     Optionally normalise to power in signal `x`.

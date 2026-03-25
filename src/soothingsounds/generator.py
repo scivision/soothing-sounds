@@ -38,7 +38,7 @@ except ImportError:
 from .signal_acoustics import normalise
 
 
-def noise(N: int, color: str = "white") -> np.ndarray:
+def noise(N: int, color: str = "white"):
     """Noise generator.
 
     * N: Amount of samples.
@@ -57,7 +57,7 @@ def noise(N: int, color: str = "white") -> np.ndarray:
     return noise_generators[color](N)
 
 
-def white(N: int) -> np.ndarray:
+def white(N: int):
     """
     White noise.
 
@@ -73,7 +73,7 @@ def white(N: int) -> np.ndarray:
     return np.random.randn(N).astype(np.float32)
 
 
-def pink(N: int) -> np.ndarray:
+def pink(N: int):
     """
     Pink noise.
 
@@ -99,7 +99,7 @@ def pink(N: int) -> np.ndarray:
     return normalise(y)  # extremely tiny value 1e-9 without normalization
 
 
-def blue(N: int) -> np.ndarray:
+def blue(N: int):
     """
     Blue noise.
 
@@ -118,7 +118,7 @@ def blue(N: int) -> np.ndarray:
     return normalise(y)
 
 
-def brown(N: int) -> np.ndarray:
+def brown(N: int):
     """
     Violet noise.
 
@@ -137,7 +137,7 @@ def brown(N: int) -> np.ndarray:
     return normalise(y)
 
 
-def violet(N: int) -> np.ndarray:
+def violet(N: int):
     """
     Violet noise. Power increases with 6 dB per octave.
 

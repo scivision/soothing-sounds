@@ -9,10 +9,12 @@ from typing import Any
 #
 from .generator import noise
 
+__version__ = "1.1.0"
+
 
 def computenoise(
     ntype: str, fs: int, nsec: int, nbitfloat: int, nbitfile: int, verbose: bool = False
-) -> np.ndarray:
+):
     nsamp = int(fs * nsec)
     ramused = (
         nsamp * nbitfloat // 8
@@ -41,9 +43,7 @@ def computenoise(
     return samps
 
 
-def liveplay(
-    samps: np.ndarray, nhours: int, fs: int, nsec: int, soundmod: str = "sounddevice"
-):
+def liveplay(samps, nhours: int, fs: int, nsec: int, soundmod: str = "sounddevice"):
     smod: Any = importlib.import_module(soundmod)
 
     if soundmod == "sounddevice":
@@ -78,9 +78,7 @@ def liveplay(
         raise ImportError(f"unknown sound module {soundmod}")
 
 
-def savenoise(
-    samps: np.ndarray, nhours: int, ofn: Path, fs: int, nsec: int, wavapi: str
-):
+def savenoise(samps, nhours: int, ofn: Path, fs: int, nsec: int, wavapi: str) -> None:
     if not ofn:
         return
 
@@ -88,26 +86,27 @@ def savenoise(
 
     f: Any
 
-    if wavapi == "raw":
-        if ofn.is_file():  # delete because we're going to append
-            ofn.unlink()
+    match wavapi:
+        case "raw":
+            if ofn.is_file():  # delete because we're going to append
+                ofn.unlink()
 
-        with ofn.open("a+b") as f:
-            for _ in range(int(nhours * 3600 / nsec)):
-                f.write(samps)
+            with ofn.open("a+b") as f:
+                for _ in range(int(nhours * 3600 / nsec)):
+                    f.write(samps)
 
-    elif wavapi == "scipy":  # pragma: no cover
-        from scipy.io import wavfile
+        case "scipy":
+            from scipy.io import wavfile
 
-        wavfile.write(ofn, fs, samps)
-    elif wavapi == "skaudio":  # pragma: no cover
-        from scikits.audiolab import Format, Sndfile
+            wavfile.write(ofn, fs, samps)
+        case "skaudio":  # pragma: no cover
+            from scikits.audiolab import Format, Sndfile
 
-        fmt = Format("flac")
-        f = Sndfile(
-            ofn, "w", fmt, 1, 16000
-        )  # scikit-audio does not have context manager
-        f.write_frames(samps)
-        f.close()
-    else:
-        raise ValueError(f"I do not understand write method {wavapi}")
+            fmt = Format("flac")
+            f = Sndfile(
+                ofn, "w", fmt, 1, 16000
+            )  # scikit-audio does not have context manager
+            f.write_frames(samps)
+            f.close()
+        case _:
+            raise ValueError(f"I do not understand write method {wavapi}")

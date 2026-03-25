@@ -26,16 +26,16 @@ the examples will use pink noise.
 ### Play sound from speakers
 
 ```sh
-python soothing.py pink
+python -m soothingsounds pink
 ```
 
 ### save sound to disk
 
 
-1. generate raw sound file: `python soothing.py pink -o pink.raw`
+1. generate raw sound file: `python -m soothingsounds pink -o pink.raw`
 2. convert raw to lossless FLAC (playable in almost all media players, computer, phone etc.)
    ```bash
-   ffmpeg -f s16le -ar 16000 -ac 1 -i pink.raw pink.fla
+   ffmpeg -f s16le -ar 16000 -ac 1 -i pink.raw pink.flac
    ```
 ## Notes
 
