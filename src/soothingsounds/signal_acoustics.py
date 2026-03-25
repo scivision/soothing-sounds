@@ -2,6 +2,7 @@
 forked from github.com/python-acoustics
 GPLv3
 """
+
 from __future__ import annotations
 import numpy as np
 

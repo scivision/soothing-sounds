@@ -1,7 +1,7 @@
 # Soothing Sounds Generator
 
 [![DOI](https://zenodo.org/badge/48785075.svg)](https://zenodo.org/badge/latestdoi/48785075)
-[![PyPi Download stats](http://pepy.tech/badge/soothingsounds)](http://pepy.tech/project/soothingsounds)
+[![PyPI Download stats](http://pepy.tech/badge/soothingsounds)](http://pepy.tech/project/soothingsounds)
 
 An acoustically pleasing Python code, targeted initially for Raspberry Pi, but should run almost anywhere.
 Uses lightweight, pure Python

@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "soothingsounds"
+version = "1.0.2"
+description = "Generate a variety of white/brown/pink noises good for relaxation"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "sounddevice",
+]
+keywords = [
+  "sound generation",
+  "white noise",
+  "brown noise",
+  "pink noise",
+  "blue noise",
+  "violet noise",
+  "relaxation",
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: End Users/Desktop",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+]
+
+[project.urls]
+Homepage = "https://github.com/scivision/soothing-sounds"
+
+[project.optional-dependencies]
+tests = [
+  "pytest",
+  "mypy",
+]
+io = [
+  "scipy",
+  "pyfftw",
+]
+
+[tool.mypy]
+files = ["."]
+ignore_missing_imports = true

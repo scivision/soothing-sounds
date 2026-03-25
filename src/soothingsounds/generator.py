@@ -22,6 +22,7 @@ Violet | +9 dB | +6 dB
 -------|-------|--------------
 
 """
+
 import numpy as np
 
 try:

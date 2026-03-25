@@ -19,14 +19,14 @@ def computenoise(
     )  # bytes, assuming np.float32, does NOT account for copies!
     if ramused > 128e6:
         logging.warning(
-            f"using more than {ramused//1e6:d} MB of RAM for samples, this can be too much for Raspi."
+            f"using more than {ramused // 1e6:d} MB of RAM for samples, this can be too much for Raspi."
         )
 
     rawused = ramused // (nbitfloat // nbitfile)
     if rawused > 1e9:
-        logging.warning(f"your raw output is {rawused/1e9:.1f} GB of data.")
+        logging.warning(f"your raw output is {rawused / 1e9:.1f} GB of data.")
 
-    print(f"sound samples used at least {ramused//1e6:.0f} MB of RAM to create.")
+    print(f"sound samples used at least {ramused // 1e6:.0f} MB of RAM to create.")
 
     ntype = ntype.lower()
     tic = time()
@@ -35,7 +35,7 @@ def computenoise(
 
     if verbose:
         print(
-            f"it took {time()-tic:.2f} seconds to compute {nsec:.0f} sec. of {ntype:s} noise."
+            f"it took {time() - tic:.2f} seconds to compute {nsec:.0f} sec. of {ntype:s} noise."
         )
 
     return samps

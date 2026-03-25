@@ -26,6 +26,7 @@ saving as RAW requires using an external program like FFMPEG or Goldwave to conv
 The huge advantage of RAW is that you can iteratively write several hours of random noise without consuming all your RAM.
 
 """
+
 from time import sleep
 import soothingsounds as ss
 from argparse import ArgumentParser
